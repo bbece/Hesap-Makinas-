@@ -20,6 +20,7 @@ namespace Hesap_Makinası
         public Form1()
         {
             InitializeComponent();
+            labelResult.Text = "";
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -49,20 +50,28 @@ namespace Hesap_Makinası
             }
             else
             {
-                optState = true;
                 Button btn = (Button)sender;
                 String newOpt = btn.Text;
-                labelResult.Text = labelResult.Text + " " + newOpt + " " + outputText.Text;
-                switch (opt)
+
+                if (opt != "")
                 {
-                    case "+": outputText.Text = (result + Double.Parse(outputText.Text)).ToString(); break;
-                    case "-": outputText.Text = (result - Double.Parse(outputText.Text)).ToString(); break;
-                    case "*": outputText.Text = (result * Double.Parse(outputText.Text)).ToString(); break;
-                    case "%": outputText.Text = (result / Double.Parse(outputText.Text)).ToString(); break;
+                    double currentNumber = Double.Parse(outputText.Text);
+                    switch (opt)
+                    {
+                        case "+": result = result + currentNumber; break;
+                        case "-": result = result - currentNumber; break;
+                        case "*": result = result * currentNumber; break;
+                        case "%": result = result / currentNumber; break;
+                    }
+                }
+                else
+                {
+                    result = Double.Parse(outputText.Text);
                 }
 
-                result = Double.Parse(outputText.Text);
-                outputText.Text = result.ToString();
+                optState = true;
+                labelResult.Text = result.ToString() + " " + newOpt + " ";
+                outputText.Text = "0";
                 opt = newOpt;
             }
         }
@@ -71,25 +80,21 @@ namespace Hesap_Makinası
         private void delete_clicked(object sender, EventArgs e)
         {
 
-            if (outputText.TextLength == 0) {
-                MessageBox.Show("Lütfen hesaplanacak değerleri giriniz.");
+            Button btn = (Button)sender;
+            string opt = btn.Text;
 
-            } else {
-                Button btn = (Button)sender;
-                opt = btn.Text;
-
-                if (opt == "CE")
-                {
-                    outputText.Text = "0";
-                }
-                else if (opt == "C")
-                {
-                    outputText.Text = "0";
-                    labelResult.Text = "0";
-                    result = 0;
-                }
+            if (opt == "CE")
+            {
+               
+                outputText.Text = "0";
             }
-
+            else if (opt == "C")
+            {
+                
+                outputText.Text = "0";
+                labelResult.Text = "";
+                result = 0;
+            }
 
 
         }

@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -57,68 +58,104 @@ namespace Hesap_Makinası
 
         }
 
-        private void nameTextBox_TextChanged(object sender, EventArgs e)
-        {
-            string enteredText = nameTextBox.Text;
 
-            // Girilen metni kontrol etmek için bir döngü kullanabilirsiniz
+        private void nameBox_TextChanged(object sender, EventArgs e)
+        {
+            string enteredText = nameBox.Text;
+
             foreach (char character in enteredText)
             {
-                if (!char.IsLetter(character)) // Eğer harf dışında bir karakter bulunursa
+                if (!char.IsLetter(character))
+                    MessageBox.Show("Lütfen sadece harf içeren bir isim giriniz. Tekrar deneyin.");
+                nameBox.Text = "";
+                break;
+            }
+        } 
+
+        private void surNameBox_TextChanged(object sender, EventArgs e)
+        {
+            string enteredText = surNameBox.Text;
+
+            
+            foreach (char character in enteredText)
+            {
+                if (!char.IsLetter(character)) 
                 {
                     MessageBox.Show("Lütfen sadece harf içeren bir isim giriniz. Tekrar deneyin.");
-                    nameTextBox.Text = ""; // TextBox'u temizle
-                    break; // Döngüyü sonlandır
-                }
-            }
-
-        }
-
-        private void surnameTextBox_TextChanged(object sender, EventArgs e)
-        {
-            string enteredText = surnameTextBox.Text;
-
-            // Girilen metni kontrol etmek için bir döngü kullanabilirsiniz
-            foreach (char character in enteredText)
-            {
-                if (!char.IsLetter(character)) // Eğer harf dışında bir karakter bulunursa
-                {
-                    MessageBox.Show("Lütfen sadece harf içeren bir isim giriniz. Tekrar deneyin.");
-                    surnameTextBox.Text = ""; // TextBox'u temizle
-                    break; // Döngüyü sonlandır
-                }
-            }
-
-        }
-
-        private void agetextBox_TextChanged(object sender, EventArgs e)
-        {
-            string enteredText = agetextBox.Text;
-
-            foreach (char character in enteredText)
-            {
-                if (!char.IsDigit(character)) 
-                {
-                    MessageBox.Show("Lütfen sadece rakam içeren bir isim giriniz. Tekrar deneyin.");
-                    agetextBox.Text = "";
+                    surNameBox.Text = ""; 
                     break; 
                 }
             }
 
         }
 
-
-        private void emailTextBox_Leave(object sender, EventArgs e)
+        private void ageBox_TextChanged(object sender, EventArgs e)
         {
-            string enteredEmail = emailTextBox.Text;
+
+        }
+
+        private void mailBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private bool IsEmailValid(string email)
+        {
+            string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
+
+            if (Regex.IsMatch(email, pattern))
+            {
+                  return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void ageBox_Leave(object sender, EventArgs e)
+        {
+            string enteredText = ageBox.Text;
+
+            foreach (char character in enteredText)
+            {
+                if (!char.IsDigit(character))
+                {
+                    MessageBox.Show("Lütfen sadece rakam içeren bir yaş giriniz. Tekrar deneyin.");
+                    ageBox.Text = "";
+                    ageBox.Focus(); 
+                    break;
+                }
+            }
+        }
+
+        private void mailBox_Leave(object sender, EventArgs e)
+        {
+            string enteredEmail = mailBox.Text;
 
             if (!IsEmailValid(enteredEmail))
             {
                 MessageBox.Show("Lütfen geçerli bir e-posta adresi giriniz.");
-                emailTextBox.Text = "";
+                mailBox.Text = "";
+                mailBox.Focus(); 
             }
         }
 
+        private void button_Click(object sender, EventArgs e)
+        {
+            string enteredEmail = mailBox.Text;
 
+            if (IsEmailValid(enteredEmail))
+            {
+                
+                Form1 form1 = new Form1();
+                form1.Show();
+                this.Hide(); // Şu anki formu gizler
+            }
+            else
+            {
+                MessageBox.Show("Lütfen geçerli bir e-posta adresi giriniz.");
+            }
+        }
     }
 }
+
