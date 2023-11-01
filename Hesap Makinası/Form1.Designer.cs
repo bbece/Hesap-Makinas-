@@ -282,7 +282,7 @@
             this.labelResult.Name = "labelResult";
             this.labelResult.Size = new System.Drawing.Size(59, 20);
             this.labelResult.TabIndex = 21;
-            this.labelResult.Text = "label1";
+            this.labelResult.Text = "sonuç";
             // 
             // Form1
             // 
@@ -313,7 +313,6 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Click += new System.EventHandler(this.delete_clicked);
             this.ResumeLayout(false);
             this.PerformLayout();
 
